@@ -6,6 +6,9 @@ const cookieParser = require("cookie-parser");
 
 // internal modules
 const {notFoundErrorHandler, errorHandler} = require("./middlewares/common/errorHandler");
+const loginRouter = require("./router/loginRouter");
+const userRouter = require("./router/userRouter");
+const inboxRouter = require("./router/inboxRouter");
 
 
 
@@ -39,7 +42,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // routing set up
-
+app.use("/api/login", loginRouter);
+app.use("/api/user", userRouter);
+app.use("/api/inbox", inboxRouter);
 
 // 404 error handler
 app.use(notFoundErrorHandler);

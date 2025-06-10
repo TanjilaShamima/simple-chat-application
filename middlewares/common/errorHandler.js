@@ -18,7 +18,15 @@ const InternalServerErrorHandler = (err, req, res, next) => {
 
 // default error handler
 const errorHandler = (err, req, res, next) => {
-    res.render("error", { title: "Error", error: err });
+    res.locals.error = process.env.NODE_ENV === "development" ? err : {message: err.message, status: err.status};
+    if(res.locals.html){
+        res.render("error", {
+            title: "Error Page",
+            error: res.locals.error,
+        });
+    } else {
+        res.json(res.locals.error);
+    }
 }
 
 module.exports = {
